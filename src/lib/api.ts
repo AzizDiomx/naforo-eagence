@@ -11,6 +11,7 @@ export interface RegisterAgencyPayload {
   password: string;
   role?: 'admin' | 'owner';
   city?: string;
+  agencyType?: string;
   unitRange?: string;
   paymentMethods?: string[];
 }
@@ -51,6 +52,10 @@ export async function registerAgency(payload: RegisterAgencyPayload): Promise<Re
       organizationName: payload.organizationName.trim(),
       password: payload.password,
       role: payload.role || 'admin',
+      ...(payload.city ? { city: payload.city.trim() } : {}),
+      ...(payload.agencyType ? { agencyType: payload.agencyType } : {}),
+      ...(payload.unitRange ? { unitRange: payload.unitRange } : {}),
+      ...(payload.paymentMethods ? { paymentMethods: payload.paymentMethods } : {}),
     }),
   });
 

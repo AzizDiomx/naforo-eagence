@@ -167,8 +167,8 @@ export default function AgencyWizardModal({ isOpen, onClose }: AgencyWizardModal
 
   const handleNextStep2 = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName.trim() || !lastName.trim()) {
-      setError('Veuillez renseigner vos prénom et nom.');
+    if (firstName.trim().length < 2 || lastName.trim().length < 2) {
+      setError('Le prénom et le nom doivent contenir au moins 2 caractères chacun.');
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -190,9 +190,9 @@ export default function AgencyWizardModal({ isOpen, onClose }: AgencyWizardModal
     e.preventDefault();
     setError(null);
 
-    if (passwordScore < 3) {
+    if (passwordScore < 4) {
       setError(
-        'Votre mot de passe doit contenir au moins 8 caractères, des majuscules/minuscules et un chiffre.'
+        'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.'
       );
       return;
     }
@@ -220,6 +220,7 @@ export default function AgencyWizardModal({ isOpen, onClose }: AgencyWizardModal
         password,
         role: 'admin',
         city: resolvedCity,
+        agencyType,
         unitRange,
         paymentMethods,
       });
@@ -818,8 +819,8 @@ export default function AgencyWizardModal({ isOpen, onClose }: AgencyWizardModal
                     Bienvenue sur Naforo, {organizationName} !
                   </h3>
                   <p className="text-xs sm:text-sm text-[#475569] max-w-md mx-auto mt-2 leading-relaxed">
-                    Votre espace est prêt avec{' '}
-                    <strong className="text-[#013E37]">3 mois d&apos;essai gratuit complet</strong>.
+                    Votre espace est créé avec un code de vérification envoyé à{' '}
+                    <strong className="text-[#013E37]">{email}</strong>.
                   </p>
                 </div>
 
