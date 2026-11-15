@@ -14,23 +14,23 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="badge-emerald mb-3">
-            <Sparkles size={14} className="text-[#D97706]" /> INTELLIGENCE IMMOBILIÈRE
+            <Sparkles size={14} className="text-[#D97706]" /> SCORING &amp; AUTOMATISATION
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#013E37] tracking-tight">
-            Naforo Copilot : votre assistant IA qui anticipe les retards
+            Scoring prédictif &amp; relances automatisées
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#64748B]">
-            Ne subissez plus les impayés. Notre intelligence artificielle analyse les habitudes de paiement et vous suggère les bonnes actions au bon moment.
+            Anticipez les retards de loyer grâce au score de fiabilité calculé sur l&apos;historique réel de chaque locataire et automatisez vos rappels multi-canaux.
           </p>
         </div>
 
         {/* 2-Column Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Column: Interactive AI Insights Cards */}
+          {/* Left Column: Interactive Insights Cards */}
           <div className="lg:col-span-7 space-y-4">
             
-            {/* AI Insight 1: Retard prévisible */}
+            {/* Insight 1: Scoring locataire */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0">
@@ -39,26 +39,23 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold text-[#D97706] uppercase tracking-wide">
-                      DÉTECTION PRÉVENTIVE D'IMPAYÉ
+                      SCORING PRÉDICTIF DE RISQUE LOCATAIRE
                     </span>
                     <span className="text-[11px] font-semibold text-slate-500">
                       Score de fiabilité : 68/100
                     </span>
                   </div>
                   <h4 className="text-sm font-bold text-[#0F172A]">
-                    Risque de retard identifié pour M. Traoré (Appt 3B, Marcory Zone 4)
+                    Suivi automatique de la ponctualité par locataire
                   </h4>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 leading-relaxed">
-                    « D'après ses 6 derniers règlements, ce locataire paie le 9 du mois. Naforo prépare un rappel WhatsApp personnalisé pour le 6 au matin. »
+                    Calculé automatiquement à partir des factures réglées à temps, des retards enregistrés et des impayés en cours pour prioriser vos relances.
                   </p>
-                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#fffbeb] text-xs font-bold text-[#b45309] border border-[#fef3c7]">
-                    <span>💡 Action recommandée : Rappel courtois par WhatsApp programmé</span>
-                  </div>
                 </div>
               </div>
             </div>
 
-            {/* AI Insight 2: Synthèse du matin */}
+            {/* Insight 2: Relances multi-canaux */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-[#e8f5f3] text-[#013E37] flex items-center justify-center shrink-0">
@@ -67,23 +64,23 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold text-[#059669] uppercase tracking-wide">
-                      SYNTHÈSE DU PORTEFEUILLE EN 1 PHRASE
+                      RELANCES &amp; QUITTANCES AUTOMATISÉES
                     </span>
                     <span className="text-[11px] font-semibold text-slate-500">
-                      Chaque matin à 08h00
+                      WhatsApp &bull; Email &bull; SMS
                     </span>
                   </div>
                   <h4 className="text-sm font-bold text-[#0F172A]">
-                    Le point clé de votre journée sans ouvrir 10 onglets
+                    Facturation mensuelle et rappels programmés sans effort
                   </h4>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 leading-relaxed">
-                    « Ce matin, 92% des loyers sont recouvrés. 4 baux arrivent à terme sous 60 jours à Cocody. Une seule intervention de plomberie reste en attente de validation. »
+                    Génération automatique des appels de loyer, rappels ciblés selon les préférences et envoi des quittances PDF dès validation du paiement.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* AI Insight 3: Rapport Mandant */}
+            {/* Insight 3: Comptabilité */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
@@ -92,17 +89,17 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold text-purple-600 uppercase tracking-wide">
-                      RÉDACTION AUTOMATIQUE DES COMPTES RENDUS
+                      COMPTABILITÉ &amp; DÉPENSES TRAVAUX
                     </span>
                     <span className="text-[11px] font-semibold text-slate-500">
-                      Fin de mois
+                      Temps réel
                     </span>
                   </div>
                   <h4 className="text-sm font-bold text-[#0F172A]">
-                    Vos mandants reçoivent un compte rendu limpide et professionnel
+                    Loyers encaissés, charges et reversements nets au clair
                   </h4>
                   <p className="text-xs sm:text-sm text-[#64748B] mt-1 leading-relaxed">
-                    « L'IA compile les loyers perçus, les charges déduites et le montant net viré, rédigé avec bienveillance et rigueur. »
+                    Suivez vos encaissements, les dépenses de travaux validées et le solde net par immeuble et par propriétaire depuis un tableau de bord unifié.
                   </p>
                 </div>
               </div>
@@ -110,31 +107,31 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
 
           </div>
 
-          {/* Right Column: AI Highlights Feature Box */}
+          {/* Right Column: Highlights Feature Box */}
           <div className="lg:col-span-5 bg-[#013E37] text-white rounded-3xl p-7 sm:p-9 shadow-xl border border-[#059669]/30 relative overflow-hidden flex flex-col justify-between h-full">
             <div className="relative z-10">
               <span className="badge-gold mb-4">
-                <Sparkles size={13} /> NAFORO COPILOT
+                <Sparkles size={13} /> PILOTAGE INTELLIGENT
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug mb-4">
-                Moins de temps d'écran, plus de rentabilité
+                Moins de relances manuelles, plus de visibilité
               </h3>
               <p className="text-sm text-emerald-100/90 leading-relaxed mb-6">
-                Naforo Copilot ne remplace pas votre expertise : il automatise ce qui vous prenait des heures et attire votre attention uniquement sur les dossiers qui nécessitent une décision.
+                Naforo automatise vos tâches répétitives (facturation, relances, quittances, alertes d&apos;échéance) et met en avant les dossiers à traiter en priorité.
               </p>
 
               <div className="space-y-3.5 mb-8 text-xs sm:text-sm">
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#FFEFB3]" />
-                  <span>Réduction moyenne des impayés de <strong>40%</strong></span>
+                  <span>Score de risque locataire mis à jour automatiquement</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#FFEFB3]" />
-                  <span>Messages de relance pré-rédigés en 1 clic</span>
+                  <span>Notifications ciblées in-app, Email, WhatsApp et SMS</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#FFEFB3]" />
-                  <span>Audit des baux et détection des clauses expirées</span>
+                  <span>Suivi des quotas et alertes d&apos;expiration de baux</span>
                 </div>
               </div>
             </div>
@@ -144,7 +141,7 @@ export default function AiCopilotSection({ onOpenWizard }: AiCopilotSectionProps
                 onClick={onOpenWizard}
                 className="btn-champagne-naforo w-full text-sm py-3 justify-center"
               >
-                <span>Tester l'IA Naforo gratuitement</span>
+                <span>Démarrer mon essai gratuit</span>
                 <ArrowRight size={16} />
               </button>
             </div>

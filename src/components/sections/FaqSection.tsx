@@ -14,12 +14,12 @@ export default function FaqSection() {
       a: "Vos locataires peuvent payer directement via Wave, Orange Money, MTN MoMo, Moov Money ou virement bancaire. Dès que le règlement est opéré, le loyer est instantanément rapproché du bon contrat de bail, et la quittance officielle avec QR code certifié est envoyée par SMS et email sans aucune intervention manuelle.",
     },
     {
-      q: "Mes propriétaires ont-ils un accès séparé sans voir les finances globales de l'agence ?",
-      a: "Absolument. Chaque propriétaire bénéficie d'un espace mandant sécurisé et strictement cloisonné. Il ne voit que ses propres biens, son taux d'encaissement et le montant net de ses loyers. Il n'a aucun accès aux biens des autres mandants ni aux commissions internes de votre agence.",
+      q: "Comment mes collaborateurs accèdent-ils à l'agence sans tout voir ?",
+      a: "Naforo applique un cloisonnement strict par rôle. Un gérant ne voit que les immeubles de son portefeuille, un comptable accède uniquement aux loyers, factures et validations financières, et un technicien ne voit que les interventions qui lui sont assignées.",
     },
     {
-      q: "Puis-je importer mon portefeuille existant depuis mes fichiers Excel actuels ?",
-      a: "Oui, tout à fait ! Naforo intègre un assistant d'importation intelligent de fichiers Excel et CSV. Vous pouvez charger tous vos immeubles, lots, baux et locataires en moins de 5 minutes. De plus, notre équipe support à Abidjan est à votre disposition par WhatsApp pour vous aider gratuitement lors de la mise en place.",
+      q: "Est-il difficile de démarrer et d'enregistrer mes biens existants ?",
+      a: "Non, la prise en main est guidée étape par étape : vous créez vos immeubles, lots, fiches propriétaires et contrats de bail en quelques clics depuis votre tableau de bord. Notre équipe à Abidjan vous accompagne également sur WhatsApp lors de votre mise en route.",
     },
     {
       q: "Faut-il installer un logiciel sur mon ordinateur ?",

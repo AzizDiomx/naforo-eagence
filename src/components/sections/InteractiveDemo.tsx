@@ -254,12 +254,12 @@ export default function InteractiveDemo({ onOpenWizard }: InteractiveDemoProps) 
 
               <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#0F172A]">MESSAGE DE RAPPEL PRÉ-RÉDIGÉ PAR L'IA</span>
+                  <span className="text-xs font-bold text-[#0F172A]">RAPPEL AUTOMATIQUE DE LOYER</span>
                   <span className="text-xs text-[#059669] font-bold">Canal : WhatsApp Business</span>
                 </div>
 
                 <div className="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-[#334155] leading-relaxed shadow-sm">
-                  « Bonjour M. Kouamé 👋, votre loyer d'Octobre 2026 pour la Villa 4B (Angré 7e) d'un montant de 250 000 FCFA est exigible au 5 du mois. Vous pouvez régler en 10 secondes via votre compte Wave en cliquant ici : <span className="text-[#059669] underline font-semibold">pay.naforo.ci/k492</span>. Votre quittance officielle vous sera immédiatement envoyée. Merci pour votre fidélité ! »
+                  « Bonjour M. Kouamé 👋, votre loyer d'Octobre 2026 pour la Villa 4B (Angré 7e) d'un montant de 250 000 FCFA est exigible au 5 du mois. Vous pouvez consulter votre facture et régler via Wave ou Orange Money depuis votre <span className="text-[#059669] underline font-semibold">Espace Locataire Naforo</span>. Votre quittance certifiée avec QR Code vous sera immédiatement envoyée. »
                 </div>
 
                 <div className="flex items-center justify-between pt-2">

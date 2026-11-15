@@ -6,23 +6,23 @@ export default function SecurityCompliance() {
   const pillars = [
     {
       icon: FileCheck,
-      title: "Conformité OHADA & Droit Ivoirien",
-      desc: "Tous les modèles de baux (habitation et commercial), quittances et décomptes respectent scrupuleusement le traité OHADA et la réglementation immobilière ivoirienne.",
+      title: "Quittances Certifiées & Baux",
+      desc: "Chaque quittance PDF générée embarque une signature numérique et un QR Code unique permettant d'en vérifier l'authenticité à tout moment.",
     },
     {
       icon: Lock,
-      title: "Chiffrement Bancaire AES-256",
-      desc: "Vos données financières, contrats et pièces d'identité sont chiffrés de bout en bout en transit (TLS 1.3) et au repos avec les standards internationaux les plus stricts.",
+      title: "Authentification & Contrôle RBAC",
+      desc: "Mots de passe hachés (bcrypt), jetons JWT sécurisés, vérification email par code OTP et droits d'accès stricts par rôle (Gérant, Comptable, Technicien).",
     },
     {
       icon: Server,
-      title: "Sauvegardes Quotidiennes & Haute Disponibilité",
-      desc: "Infrastructure cloud redondée disponible à 99,95%. Même lors des pics d'encaissements du 1er au 10 du mois, votre plateforme reste ultra-rapide.",
+      title: "Journal d'Audit & Traçabilité",
+      desc: "Les actions sensibles, connexions, validations de dépenses et opérations financières sont tracées pour une gouvernance transparente de votre agence.",
     },
     {
       icon: ShieldCheck,
       title: "Cloisonnement Étanche Multi-Tenant",
-      desc: "Vos mandats et finances sont totalement isolés. Vos propriétaires n'accèdent qu'à leurs propres biens, et vos locataires n'ont accès qu'à leur quittance.",
+      desc: "Chaque organisation est isolée. Vos gérants n'accèdent qu'à leurs immeubles assignés, et vos locataires uniquement à leurs propres documents.",
     },
   ];
 
