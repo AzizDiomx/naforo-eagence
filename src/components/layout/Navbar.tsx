@@ -12,21 +12,20 @@ interface NavbarProps {
 }
 
 const NAV_LINKS = [
+  { href: '#', label: 'Accueil' },
   { href: '#histoire', label: 'Histoire' },
   { href: '#fonctionnalites', label: 'Fonctionnalités' },
   { href: '#demo', label: 'Démo' },
-  { href: '#simulateur', label: 'Simulateur' },
   { href: '#faq', label: 'FAQ' },
 ];
 
 export default function Navbar({ onOpenWizard }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const backofficeLoginUrl = getBackofficeLoginUrl();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 12);
+    const handleScroll = () => setScrolled(window.scrollY > 18);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -45,56 +44,57 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
     onOpenWizard();
   };
 
-  const solid = scrolled || mobileMenuOpen;
-
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 border-b ${
-        solid
-          ? 'bg-[#07110f]/85 backdrop-blur-md border-white/[0.06]'
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 border-b ${
+        scrolled || mobileMenuOpen
+          ? 'bg-[#f2f2f1]/92 backdrop-blur-md border-[#d8d8d4]'
           : 'bg-transparent border-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto h-16 px-5 sm:px-8 flex items-center justify-between">
-        {/* Logo */}
+      <div className="max-w-[1440px] mx-auto h-16 px-5 sm:px-8 lg:px-12 flex items-center justify-between">
+        {/* Marque NAF0R0 */}
         <a href="#" className="flex items-center gap-2.5" aria-label="Naforo, accueil">
-          <Image
-            src="/images/logo.png"
-            alt=""
-            width={28}
-            height={28}
-            className="object-contain"
-            priority
-          />
-          <span className="font-display text-[17px] font-semibold tracking-tight text-white">
-            Naforo
+          <div className="w-8 h-8 rounded-lg bg-[#01362a] p-1 flex items-center justify-center shrink-0">
+            <Image
+              src="/images/logo.png"
+              alt="Logo Naforo"
+              width={26}
+              height={26}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span className="hidden sm:inline font-display text-[15px] font-extrabold tracking-tight text-[#01362a]">
+            NAFORO
           </span>
         </a>
 
-        {/* Liens desktop */}
-        <nav className="hidden lg:flex items-center gap-8">
+        {/* Liens centraux sobres */}
+        <nav className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[13.5px] text-white/65 hover:text-white transition-colors"
+              className="text-[13.5px] font-medium text-[#3a3a3a] hover:text-[#01362a] hover:underline underline-offset-4 decoration-[#01362a] transition-colors"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* Actions desktop */}
-        <div className="hidden md:flex items-center gap-5">
+        {/* Actions droite */}
+        <div className="hidden md:flex items-center gap-4">
           <a
             href={backofficeLoginUrl}
-            className="text-[13.5px] text-white/65 hover:text-white transition-colors"
+            className="text-[13.5px] font-medium text-[#3a3a3a] hover:text-[#01362a] transition-colors"
           >
             Connexion
           </a>
           <button
+            type="button"
             onClick={handleCtaClick}
-            className="h-9 px-4 rounded-full bg-white text-[#07110f] text-[13.5px] font-medium hover:bg-white/90 transition-colors cursor-pointer"
+            className="h-9 px-5 rounded-full bg-[#01362a] hover:bg-[#024c3b] text-white text-[13px] font-semibold transition-colors cursor-pointer"
           >
             Créer mon agence
           </button>
@@ -102,8 +102,9 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
 
         {/* Mobile */}
         <button
+          type="button"
           onClick={() => setMobileMenuOpen((v) => !v)}
-          className="md:hidden -mr-2 p-2 text-white/80 hover:text-white"
+          className="md:hidden -mr-2 p-2 text-[#14221e]"
           aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
           aria-expanded={mobileMenuOpen}
         >
@@ -118,14 +119,14 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="md:hidden fixed inset-x-0 top-16 bottom-0 bg-[#07110f] px-5 pt-4 pb-8 flex flex-col"
+            className="md:hidden fixed inset-x-0 top-16 bottom-0 bg-[#f2f2f1] px-5 pt-4 pb-8 flex flex-col"
           >
             {NAV_LINKS.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-4 text-lg text-white/85 border-b border-white/[0.06]"
+                className="py-4 text-lg text-[#14221e] border-b border-[#d8d8d4]"
               >
                 {item.label}
               </a>
@@ -133,13 +134,14 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
             <div className="mt-auto flex flex-col gap-3">
               <a
                 href={backofficeLoginUrl}
-                className="h-12 rounded-full border border-white/15 text-white text-[15px] flex items-center justify-center"
+                className="h-12 rounded-full border border-[#01362a]/25 text-[#01362a] text-[15px] font-medium flex items-center justify-center"
               >
                 Connexion
               </a>
               <button
+                type="button"
                 onClick={handleCtaClick}
-                className="h-12 rounded-full bg-white text-[#07110f] text-[15px] font-medium"
+                className="h-12 rounded-full bg-[#01362a] text-white text-[15px] font-semibold"
               >
                 Créer mon agence
               </button>
