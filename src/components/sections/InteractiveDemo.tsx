@@ -29,8 +29,8 @@ export default function InteractiveDemo({ onOpenWizard }: InteractiveDemoProps) 
   const tabs = [
     { id: 'collection', label: '1. Encaissements Wave & OM', icon: Smartphone },
     { id: 'receipt', label: '2. Quittance Certifiée QR', icon: FileText },
-    { id: 'owner', label: '3. Espace Propriétaire', icon: Users },
-    { id: 'ai', label: '4. IA & Relances Copilot', icon: Sparkles },
+    { id: 'owner', label: '3. Suivi & Portefeuilles', icon: Users },
+    { id: 'ai', label: '4. Relances Automatisées', icon: Sparkles },
   ] as const;
 
   const handleTabChange = (tabId: typeof activeTab) => {
@@ -39,24 +39,24 @@ export default function InteractiveDemo({ onOpenWizard }: InteractiveDemoProps) 
   };
 
   return (
-    <section id="demo" className="py-20 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="demo" className="py-20 sm:py-28 bg-[#f2f2f1] border-t border-[#e2e2dc]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="badge-emerald mb-3">
-            <Sparkles size={14} /> DÉMO INTERACTIVE
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#013E37] tracking-tight">
-            Voyez comment fonctionne Naforo au quotidien
+        <div className="max-w-2xl mb-12">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#5e5b53] mb-3">
+            Aperçu produit
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[#14221e] tracking-tight">
+            Voyez comment fonctionne Naforo au quotidien.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#64748B]">
-            Cliquez sur les 4 étapes ci-dessous pour tester l'expérience que vos gestionnaires, propriétaires et locataires vont vivre.
+          <p className="mt-3 text-base text-[#5e5b53]">
+            Parcourez les 4 écrans clés utilisés chaque jour par votre équipe et vos locataires.
           </p>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -64,13 +64,13 @@ export default function InteractiveDemo({ onOpenWizard }: InteractiveDemoProps) 
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                className={`flex items-center gap-2 px-4 h-10 rounded-full text-[13px] font-medium border transition-colors cursor-pointer ${
                   isActive
-                    ? 'bg-[#013E37] text-white shadow-md'
-                    : 'bg-white text-[#475569] border border-slate-200 hover:bg-slate-100'
+                    ? 'bg-[#01362a] text-white border-[#01362a]'
+                    : 'bg-white text-[#3a3a3a] border-[#d6d6d0] hover:border-[#01362a]/50'
                 }`}
               >
-                <Icon size={16} className={isActive ? 'text-[#FFEFB3]' : 'text-slate-400'} />
+                <Icon size={15} className={isActive ? 'text-white' : 'text-[#5e5b53]'} />
                 <span>{tab.label}</span>
               </button>
             );

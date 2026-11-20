@@ -1,77 +1,57 @@
 'use client';
 
-import { ShieldCheck, Lock, Server, FileCheck, CheckCircle2 } from 'lucide-react';
-
 export default function SecurityCompliance() {
   const pillars = [
     {
-      icon: FileCheck,
-      title: "Quittances Certifiées & Baux",
+      index: '01',
+      title: 'Quittances certifiées & baux',
       desc: "Chaque quittance PDF générée embarque une signature numérique et un QR Code unique permettant d'en vérifier l'authenticité à tout moment.",
     },
     {
-      icon: Lock,
-      title: "Authentification & Contrôle RBAC",
-      desc: "Mots de passe hachés (bcrypt), jetons JWT sécurisés, vérification email par code OTP et droits d'accès stricts par rôle (Gérant, Comptable, Technicien).",
+      index: '02',
+      title: 'Authentification & contrôle RBAC',
+      desc: 'Mots de passe hachés (bcrypt), jetons JWT sécurisés, vérification email par code OTP et droits d’accès stricts par rôle (Gérant, Comptable, Technicien).',
     },
     {
-      icon: Server,
-      title: "Journal d'Audit & Traçabilité",
-      desc: "Les actions sensibles, connexions, validations de dépenses et opérations financières sont tracées pour une gouvernance transparente de votre agence.",
+      index: '03',
+      title: "Journal d'audit & traçabilité",
+      desc: 'Les actions sensibles, connexions, validations de dépenses et opérations financières sont tracées pour une gouvernance transparente.',
     },
     {
-      icon: ShieldCheck,
-      title: "Cloisonnement Étanche Multi-Tenant",
-      desc: "Chaque organisation est isolée. Vos gérants n'accèdent qu'à leurs immeubles assignés, et vos locataires uniquement à leurs propres documents.",
+      index: '04',
+      title: 'Cloisonnement multi-tenant',
+      desc: 'Chaque organisation est isolée. Vos gérants n’accèdent qu’à leurs immeubles assignés, et vos locataires uniquement à leurs documents.',
     },
   ];
 
   return (
-    <section className="py-20 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="badge-emerald mb-3">
-            <ShieldCheck size={14} /> SÉCURITÉ & CONFIANCE B2B
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#013E37] tracking-tight">
-            Vos données patrimoniales protégées selon les normes les plus exigeantes
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#64748B]">
-            Une plateforme bâtie pour sécuriser les milliards de francs CFA transitant chaque mois par nos agences partenaires.
+    <section className="py-20 sm:py-28 bg-white border-t border-[#e2e2dc]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="max-w-2xl mb-14">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#5e5b53] mb-3">
+            Sécurité &amp; Gouvernance
           </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[#14221e] tracking-tight">
+            Vos données patrimoniales cloisonnées et traçables.
+          </h2>
         </div>
 
-        {/* 4 Pillars Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pillars.map((p, idx) => {
-            const Icon = p.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 border border-[#E2E8F0] shadow-sm hover:border-[#013E37]/30 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#e8f5f3] text-[#013E37] flex items-center justify-center mb-5">
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="text-base font-bold text-[#0F172A] mb-2 font-display">
-                    {p.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                    {p.desc}
-                  </p>
+          {pillars.map((p) => (
+            <div
+              key={p.index}
+              className="rounded-2xl p-6 border border-[#e2e2dc] bg-[#fafaf8] flex flex-col justify-between"
+            >
+              <div>
+                <div className="text-[12px] font-mono text-[#01362a] font-semibold mb-4">
+                  {p.index}
                 </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-[#059669]">
-                  <CheckCircle2 size={14} />
-                  <span>Garanti par Naforo</span>
-                </div>
+                <h3 className="text-base font-semibold text-[#14221e] mb-2">{p.title}</h3>
+                <p className="text-[13px] text-[#5e5b53] leading-relaxed">{p.desc}</p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
-
       </div>
     </section>
   );

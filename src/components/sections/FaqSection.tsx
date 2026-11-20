@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { HelpCircle, ChevronDown, MessageSquare } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { getWhatsappDemoUrl } from '@/lib/config';
 
@@ -10,8 +10,8 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: "Comment mes locataires règlent-ils leur loyer sur Naforo ?",
-      a: "Vos locataires peuvent payer directement via Wave, Orange Money, MTN MoMo, Moov Money ou virement bancaire. Dès que le règlement est opéré, le loyer est instantanément rapproché du bon contrat de bail, et la quittance officielle avec QR code certifié est envoyée par SMS et email sans aucune intervention manuelle.",
+      q: 'Comment mes locataires règlent-ils leur loyer sur Naforo ?',
+      a: "Vos locataires peuvent régler par Wave, Orange Money, MTN MoMo, Moov Money, virement bancaire ou espèces enregistrées. Dès validation, le paiement est rapproché du bon bail et la quittance PDF avec QR Code certifié est disponible et envoyée par email.",
     },
     {
       q: "Comment mes collaborateurs accèdent-ils à l'agence sans tout voir ?",
@@ -22,16 +22,16 @@ export default function FaqSection() {
       a: "Non, la prise en main est guidée étape par étape : vous créez vos immeubles, lots, fiches propriétaires et contrats de bail en quelques clics depuis votre tableau de bord. Notre équipe à Abidjan vous accompagne également sur WhatsApp lors de votre mise en route.",
     },
     {
-      q: "Faut-il installer un logiciel sur mon ordinateur ?",
-      a: "Non. Naforo est une solution SaaS 100% cloud accessible depuis n'importe quel navigateur (sur PC, Mac, tablette ou smartphone). Vos collaborateurs et vous-même pouvez accéder à la plateforme au bureau ou en déplacement sur le terrain avec les mêmes données synchronisées en temps réel.",
+      q: 'Faut-il installer un logiciel sur mon ordinateur ?',
+      a: "Non. Naforo est accessible depuis n'importe quel navigateur sur ordinateur, tablette ou smartphone, avec des données synchronisées en temps réel.",
     },
     {
       q: "Que se passe-t-il après les 3 mois d'essai gratuit ?",
-      a: "Vous pouvez continuer à utiliser Naforo en choisissant le forfait adapté à la taille exacte de votre portefeuille (à partir de quelques dizaines de milliers de francs CFA par mois). Aucune carte bancaire n'est demandée à l'inscription et vous bénéficiez de 3 mois complets pour tester la plateforme sur vos encaissements réels.",
+      a: "Vous choisissez simplement le forfait adapté à la taille de votre portefeuille. Aucune carte bancaire n'est demandée à l'inscription.",
     },
     {
-      q: "Mes locataires ou propriétaires doivent-ils obligatoirement télécharger une application ?",
-      a: "Non, ce n'est pas une obligation. Les locataires reçoivent leurs avis d'échéance par SMS ou WhatsApp avec un lien direct de paiement sécurisé, et téléchargent leur quittance sans installer d'application. L'application mobile leur offre simplement un confort supplémentaire pour suivre leurs baux et signaler d'éventuels incidents.",
+      q: 'Mes locataires doivent-ils obligatoirement télécharger une application ?',
+      a: "Non. Ils reçoivent leurs avis d'échéance et quittances par email/SMS/WhatsApp, et peuvent aussi utiliser le portail locataire web ou mobile s'ils le souhaitent.",
     },
   ];
 
@@ -44,50 +44,41 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faq" className="py-20 bg-white border-t border-slate-200">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="badge-emerald mb-3">
-            <HelpCircle size={14} /> QUESTIONS FRÉQUENTES
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#013E37] tracking-tight">
-            Tout ce que vous devez savoir pour démarrer sereinement
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#64748B]">
-            Une question spécifique ? Notre équipe locale à Abidjan vous répond 7j/7 sur WhatsApp.
+    <section id="faq" className="py-20 sm:py-28 bg-[#f2f2f1] border-t border-[#e2e2dc]">
+      <div className="max-w-3xl mx-auto px-5 sm:px-8">
+        <div className="mb-12">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#5e5b53] mb-3">
+            Questions fréquentes
           </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[#14221e] tracking-tight">
+            Tout pour démarrer sereinement.
+          </h2>
         </div>
 
-        {/* Accordion */}
-        <div className="space-y-4">
+        <div className="divide-y divide-[#dcdcd6] border-y border-[#dcdcd6]">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div
-                key={idx}
-                className="border border-[#E2E8F0] rounded-2xl overflow-hidden transition-all duration-200 bg-white shadow-sm"
-              >
+              <div key={faq.q}>
                 <button
+                  type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none focus:ring-2 focus:ring-[#059669] rounded-2xl"
+                  className="w-full text-left py-5 flex items-center justify-between gap-4 cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-bold text-sm sm:text-base text-[#0F172A] font-display">
+                  <span className="font-medium text-[15px] sm:text-base text-[#14221e]">
                     {faq.q}
                   </span>
-                  <div
-                    className={`w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 bg-[#013E37] text-white' : 'text-[#64748B]'
+                  <ChevronDown
+                    size={18}
+                    className={`shrink-0 text-[#5e5b53] transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-[#01362a]' : ''
                     }`}
-                  >
-                    <ChevronDown size={18} />
-                  </div>
+                  />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-6 sm:px-6 pt-1 text-xs sm:text-sm text-[#475569] leading-relaxed border-t border-slate-100 bg-[#F8FAFC]">
+                  <div className="pb-5 text-[14px] text-[#5e5b53] leading-relaxed">
                     {faq.a}
                   </div>
                 )}
@@ -96,32 +87,19 @@ export default function FaqSection() {
           })}
         </div>
 
-        {/* WhatsApp Help Banner */}
-        <div className="mt-12 p-6 rounded-2xl bg-[#e8f5f3] border border-[#013E37]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#059669] text-white flex items-center justify-center shrink-0">
-              <MessageSquare size={20} />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-[#013E37]">
-                Vous préférez échanger directement avec un conseiller ?
-              </h4>
-              <p className="text-xs text-[#475569]">
-                Discutez avec nos experts gestion locative à Abidjan pour une démonstration personnalisée.
-              </p>
-            </div>
-          </div>
-
+        <div className="mt-10 pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-[13.5px] text-[#5e5b53]">
+            Une question spécifique ? Échangez avec notre équipe à Abidjan.
+          </p>
           <a
             href={getWhatsappDemoUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary-naforo text-xs py-2.5 px-4 shrink-0 font-bold"
+            className="h-10 px-5 rounded-full border border-[#01362a] text-[#01362a] hover:bg-[#01362a] hover:text-white text-[13px] font-medium inline-flex items-center justify-center transition-colors shrink-0"
           >
-            <span>Contacter sur WhatsApp (Côte d'Ivoire)</span>
+            Contacter sur WhatsApp
           </a>
         </div>
-
       </div>
     </section>
   );

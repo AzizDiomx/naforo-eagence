@@ -1,188 +1,147 @@
 'use client';
 
-import { 
-  Smartphone, 
-  FileCheck, 
-  Users, 
-  Wrench, 
-  FolderLock, 
-  Sparkles, 
-  Check, 
-  ArrowRight,
-  Shield,
-  QrCode,
-  CalendarCheck
-} from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 
 interface CoreFeaturesProps {
   onOpenWizard: () => void;
 }
 
-export default function CoreFeatures({ onOpenWizard }: CoreFeaturesProps) {
-  const features = [
-    {
-      badge: "ENCAISSEMENTS MOBILES",
-      icon: Smartphone,
-      title: "Wave, Orange Money & MTN intégrés en temps réel",
-      desc: "Vos locataires paient directement depuis leur téléphone. Les fonds sont rapprochés automatiquement avec la bonne facture et le bon contrat de bail.",
-      points: [
-        "Lien de paiement envoyé par SMS et WhatsApp",
-        "Rapprochement automatique sans saisie manuelle",
-        "Zéro risque d'erreur sur le numéro de contrat",
-      ],
-      tag: "Temps réel",
-    },
-    {
-      badge: "CONFORMITÉ FISCALE & LÉGALE",
-      icon: FileCheck,
-      title: "Quittances certifiées avec QR Code infalsifiable",
-      desc: "Dès que le loyer est perçu, une quittance conforme à la loi ivoirienne et au traité OHADA est générée en 1 seconde avec signature numérique vérifiable.",
-      points: [
-        "QR Code unique de vérification publique",
-        "Horodatage et signature électronique certifiée",
-        "Envoi instantané par email et disponible sur l'app",
-      ],
-      tag: "Conforme OHADA",
-    },
-    {
-      badge: "TRANSPARENCE & ÉQUIPE",
-      icon: Users,
-      title: "Gestion d'équipe cloisonnée & Portail Locataire",
-      desc: "Donnez à chaque collaborateur (gérant, comptable, technicien) uniquement accès à son périmètre, et offrez un espace dédié à vos locataires.",
-      points: [
-        "Portefeuilles strictement isolés par gérant",
-        "Accès comptable dédié aux loyers, factures et dépenses",
-        "Suivi clair des reversements pour chaque propriétaire",
-      ],
-      tag: "Multi-rôles",
-    },
-    {
-      badge: "MAINTENANCE & TRAVAUX",
-      icon: Wrench,
-      title: "Incidents, États des lieux & Validation travaux",
-      desc: "Les locataires signalent les pannes avec photos depuis leur portail. Assignez vos techniciens et validez les devis avant engagement des dépenses.",
-      points: [
-        "Photos et suivi en direct des interventions",
-        "États des lieux d'entrée et de sortie structurés",
-        "Circuit de validation des dépenses et travaux",
-      ],
-      tag: "Zéro litige",
-    },
-    {
-      badge: "ARCHIVAGE CENTRALISÉ",
-      icon: FolderLock,
-      title: "Coffre-fort Documents GED & Baux",
-      desc: "Tous vos contrats de bail, quittances, états des lieux, justificatifs et pièces d'identité sont centralisés et retrouvés en un clic.",
-      points: [
-        "Recherche instantanée par locataire, lot ou bien",
-        "Rappels automatiques d'échéance et fin de bail",
-        "Accès sécurisé par rôle pour votre équipe",
-      ],
-      tag: "GED intégrée",
-    },
-  ];
+const FEATURES = [
+  {
+    index: '01',
+    title: 'Wave, Orange Money & MTN intégrés',
+    desc: 'Vos locataires paient directement depuis leur téléphone. Chaque règlement est rapproché avec la bonne facture et le bon bail.',
+    points: [
+      'Rappels envoyés par SMS et WhatsApp',
+      'Rapprochement automatique sans saisie manuelle',
+      'Historique complet par locataire et par lot',
+    ],
+  },
+  {
+    index: '02',
+    title: 'Quittances certifiées avec QR Code',
+    desc: 'Dès que le loyer est perçu, une quittance PDF horodatée est générée avec signature numérique et QR Code vérifiable.',
+    points: [
+      'QR Code unique de vérification publique',
+      'Envoi automatique par email',
+      'Archivage immédiat dans le portail locataire',
+    ],
+  },
+  {
+    index: '03',
+    title: 'Équipe cloisonnée par rôle',
+    desc: 'Chaque collaborateur accède uniquement à son périmètre : gérant par portefeuille, comptable aux finances, technicien aux interventions.',
+    points: [
+      'Portefeuilles strictement isolés par gérant',
+      'Accès comptable dédié aux loyers et dépenses',
+      'Suivi clair des reversements propriétaires',
+    ],
+  },
+  {
+    index: '04',
+    title: 'Incidents, états des lieux & travaux',
+    desc: 'Les locataires signalent les pannes avec photos. Assignez vos techniciens et validez les devis avant d’engager une dépense.',
+    points: [
+      'Photos et suivi en direct des interventions',
+      'États des lieux d’entrée et de sortie structurés',
+      'Circuit de validation des dépenses et travaux',
+    ],
+  },
+  {
+    index: '05',
+    title: 'Coffre-fort documents & baux',
+    desc: 'Contrats de bail, quittances, états des lieux et pièces d’identité sont centralisés et retrouvés en un instant.',
+    points: [
+      'Recherche rapide par locataire, lot ou immeuble',
+      'Alertes automatiques d’échéance de bail',
+      'Accès sécurisé pour toute votre équipe',
+    ],
+  },
+];
 
+export default function CoreFeatures({ onOpenWizard }: CoreFeaturesProps) {
   return (
-    <section id="fonctionnalites" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="badge-emerald mb-3">
-            <Sparkles size={14} /> FONCTIONNALITÉS ESSENTIELLES
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#013E37] tracking-tight">
-            Tout ce dont une agence moderne a besoin pour piloter son parc
+    <section id="fonctionnalites" className="py-20 sm:py-28 bg-white border-t border-[#e2e2dc]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="max-w-2xl mb-14 sm:mb-16">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#5e5b53] mb-3">
+            Fonctionnalités
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-[#14221e] tracking-tight leading-tight">
+            Tout ce dont une agence moderne a besoin pour piloter son parc.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#64748B]">
-            Une suite d'outils pensée spécifiquement pour les réalités du marché immobilier ouest-africain.
+          <p className="mt-4 text-base text-[#5e5b53] leading-relaxed">
+            Une suite d&apos;outils pensée pour les réalités du marché immobilier ouest-africain.
           </p>
         </div>
 
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feat, idx) => {
-            const Icon = feat.icon;
-            return (
-              <div
-                key={idx}
-                className="glass-card p-6 sm:p-7 flex flex-col justify-between hover:border-[#013E37]/30 group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#e8f5f3] text-[#013E37] flex items-center justify-center transition-colors group-hover:bg-[#013E37] group-hover:text-white shadow-sm">
-                      <Icon size={22} />
-                    </div>
-                    <span className="text-[11px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-slate-100 text-[#475569] border border-slate-200">
-                      {feat.tag}
-                    </span>
-                  </div>
-
-                  <span className="text-[11px] font-bold text-[#059669] uppercase tracking-wider block mb-1">
-                    {feat.badge}
-                  </span>
-                  <h3 className="text-lg font-bold text-[#0F172A] mb-2 leading-snug">
-                    {feat.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed mb-5">
-                    {feat.desc}
-                  </p>
-
-                  <div className="space-y-2 pt-4 border-t border-slate-100">
-                    {feat.points.map((pt, pIdx) => (
-                      <div key={pIdx} className="flex items-center gap-2 text-xs text-[#334155] font-medium">
-                        <Check size={14} className="text-[#059669] shrink-0" />
-                        <span>{pt}</span>
-                      </div>
-                    ))}
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {FEATURES.map((feat) => (
+            <div
+              key={feat.index}
+              className="rounded-2xl border border-[#e2e2dc] bg-[#fafaf8] p-6 sm:p-7 flex flex-col justify-between hover:border-[#01362a]/40 transition-colors"
+            >
+              <div>
+                <div className="text-[12px] font-mono text-[#01362a] font-semibold mb-4">
+                  {feat.index}
                 </div>
+                <h3 className="text-lg font-semibold text-[#14221e] mb-2 leading-snug">
+                  {feat.title}
+                </h3>
+                <p className="text-[13.5px] text-[#5e5b53] leading-relaxed mb-5">
+                  {feat.desc}
+                </p>
 
-                <div className="mt-6 pt-4">
-                  <button
-                    onClick={onOpenWizard}
-                    className="text-xs font-bold text-[#013E37] group-hover:text-[#059669] inline-flex items-center gap-1.5 transition-colors"
-                  >
-                    <span>Activer pour mon agence</span>
-                    <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-                  </button>
-                </div>
+                <ul className="space-y-2 pt-4 border-t border-[#e5e5e0]">
+                  {feat.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2 text-[12.5px] text-[#3a3a3a]">
+                      <Check size={14} className="text-[#01362a] shrink-0 mt-0.5" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            );
-          })}
 
-          {/* Bonus 6th Box : Call to Action Card in the Grid */}
-          <div className="rounded-2xl p-6 sm:p-7 bg-gradient-to-br from-[#013E37] to-[#012b26] text-white flex flex-col justify-between border border-[#013E37] shadow-lg relative overflow-hidden">
+              <div className="mt-6 pt-4">
+                <button
+                  type="button"
+                  onClick={onOpenWizard}
+                  className="text-[13px] font-medium text-[#01362a] hover:underline inline-flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span>Activer pour mon agence</span>
+                  <ArrowRight size={13} />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {/* Carte d'action sobre */}
+          <div className="rounded-2xl p-6 sm:p-7 bg-[#01362a] text-white flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-white/10 text-[#FFEFB3] flex items-center justify-center mb-5">
-                <Shield size={24} />
-              </div>
-              <span className="text-[11px] font-bold text-[#FFEFB3] uppercase tracking-wider block mb-1">
-                DÉMARRAGE RAPIDE
-              </span>
-              <h3 className="text-xl font-extrabold text-white mb-2">
-                Prêt à moderniser votre gestion dès aujourd'hui ?
+              <div className="text-[12px] font-mono text-white/60 mb-4">06</div>
+              <h3 className="text-xl font-semibold text-white mb-2 leading-snug">
+                Prêt à moderniser votre gestion dès aujourd&apos;hui ?
               </h3>
-              <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
-                Rejoignez les gestionnaires d'Abidjan qui ont réduit leurs impayés de 40% et gagnent 10 heures par semaine.
+              <p className="text-[13.5px] text-white/75 leading-relaxed">
+                Ouvrez votre espace agence en 3 minutes et centralisez vos immeubles, baux et encaissements.
               </p>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-8">
               <button
+                type="button"
                 onClick={onOpenWizard}
-                className="btn-champagne-naforo w-full text-xs py-3 justify-center"
+                className="w-full h-11 rounded-full bg-white text-[#01362a] hover:bg-white/90 text-[13.5px] font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <span>Créer mon agence en 3 min</span>
+                <span>Créer mon agence</span>
                 <ArrowRight size={14} />
               </button>
-              <div className="text-[11px] text-center text-emerald-200 mt-2">
-                3 mois gratuits &bull; Sans carte bancaire
-              </div>
+              <p className="text-[11.5px] text-center text-white/60 mt-2.5">
+                3 mois offerts &middot; Sans carte bancaire
+              </p>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
