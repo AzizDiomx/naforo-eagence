@@ -48,9 +48,9 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 border-b ${
         mobileMenuOpen
-          ? 'bg-[#f4e9c8] border-[#dfd2ab]'
+          ? 'bg-white border-[#e2e2dc]'
           : scrolled
-          ? 'bg-[#f4e9c8]/95 backdrop-blur-md border-[#dfd2ab]'
+          ? 'bg-white/95 backdrop-blur-md border-[#e2e2dc]'
           : 'bg-[#f4e9c8]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-[#dfd2ab] md:border-transparent'
       }`}
     >
@@ -121,7 +121,7 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] z-50 bg-[#f4e9c8] border-t border-[#dfd2ab] px-5 pt-4 pb-8 flex flex-col overflow-y-auto"
+            className="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] z-50 bg-white border-t border-[#e2e2dc] px-5 pt-4 pb-8 flex flex-col overflow-y-auto"
           >
             {NAV_LINKS.map((item) => (
               <a
