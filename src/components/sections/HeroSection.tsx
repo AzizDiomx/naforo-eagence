@@ -1,12 +1,30 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MapPin, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { RotateCcw, Volume2, VolumeX, Wind } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 interface HeroSectionProps {
   onOpenWizard: () => void;
 }
+
+const CURVES = [
+  { d: 'M -80 980 C 260 660, 560 440, 1520 60', w: 2.8, o: 0.72 },
+  { d: 'M -40 920 C 310 620, 620 420, 1500 120', w: 1.6, o: 0.6 },
+  { d: 'M 40 990 C 380 720, 740 480, 1520 190', w: 3.6, o: 0.8 },
+  { d: 'M -100 840 C 220 560, 580 340, 1480 20', w: 1.4, o: 0.58 },
+  { d: 'M 140 990 C 480 740, 820 520, 1520 260', w: 2.2, o: 0.7 },
+  { d: 'M -60 760 C 260 490, 660 280, 1460 -20', w: 3.1, o: 0.75 },
+  { d: 'M 240 990 C 580 780, 920 560, 1520 340', w: 1.8, o: 0.65 },
+  { d: 'M -80 660 C 240 410, 620 220, 1380 -40', w: 2.4, o: 0.68 },
+  { d: 'M 360 990 C 680 800, 980 610, 1520 420', w: 3.8, o: 0.82 },
+  { d: 'M -40 540 C 280 330, 640 160, 1260 -40', w: 1.3, o: 0.55 },
+  { d: 'M 520 990 C 820 820, 1080 660, 1520 510', w: 2.5, o: 0.74 },
+  { d: 'M 680 990 C 940 840, 1180 710, 1520 600', w: 1.7, o: 0.62 },
+  { d: 'M -60 410 C 240 240, 560 110, 1080 -30', w: 2.1, o: 0.64 },
+  { d: 'M 840 990 C 1060 880, 1260 770, 1520 690', w: 3.2, o: 0.78 },
+  { d: 'M 1020 990 C 1190 910, 1340 840, 1520 790', w: 1.5, o: 0.6 },
+];
 
 export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
   const [soundOn, setSoundOn] = useState(false);
@@ -150,7 +168,7 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
           [
             { opacity: 0, offset: 0 },
             { opacity: 0, offset: 0.8 },
-            { opacity: 0.9, offset: 1 },
+            { opacity: 0.85, offset: 1 },
           ],
           { duration, fill: 'both' }
         )
@@ -212,29 +230,31 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
 
   return (
     <section
-      className="relative min-h-[100svh] w-full overflow-hidden bg-[#ffffff] text-[#01362a] flex flex-col justify-between"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-[#ffffff] text-[#14221e] flex flex-col justify-between"
       style={{ '--fs': 'min(17vh, 10.6vw)' } as React.CSSProperties}
     >
-      {/* Fond couleur secondaire Naforo (Champagne doux) + trame architecturale discrète */}
+      {/* Fond papier doux + 15 courbes S blanches */}
       <div
         ref={paperRef}
         aria-hidden="true"
-        className="absolute inset-0 bg-[#f4e9c8] pointer-events-none"
+        className="absolute inset-0 bg-[#f2f2f1] pointer-events-none"
       >
         <svg
           viewBox="0 0 1440 960"
           preserveAspectRatio="none"
           className="w-full h-full block"
         >
-          {/* Lignes architecturales et géométriques Naforo */}
-          <g stroke="#01362a" strokeOpacity="0.065" fill="none" vectorEffect="non-scaling-stroke">
-            <line x1="180" y1="0" x2="180" y2="960" strokeWidth="1" />
-            <line x1="1260" y1="0" x2="1260" y2="960" strokeWidth="1" />
-            <line x1="0" y1="220" x2="1440" y2="220" strokeWidth="1" />
-            <line x1="0" y1="740" x2="1440" y2="740" strokeWidth="1" />
-            <circle cx="720" cy="430" r="310" strokeWidth="1" />
-            <circle cx="720" cy="430" r="440" strokeWidth="1" strokeDasharray="6 10" />
-          </g>
+          {CURVES.map((c, idx) => (
+            <path
+              key={idx}
+              d={c.d}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth={c.w}
+              strokeOpacity={c.o}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
         </svg>
       </div>
 
@@ -243,10 +263,12 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
         <div
           ref={rowRef}
           className="flex flex-col md:flex-row items-center justify-center select-none text-[clamp(44px,min(22vw,11.5vh),88px)] md:text-[clamp(48px,min(17vh,10.6vw),190px)]"
-          style={{ lineHeight: 0.8 }}
+          style={{
+            lineHeight: 0.8,
+          }}
         >
           <span
-            className="font-extrabold tracking-[-0.045em] text-[#01362a]"
+            className="font-extrabold tracking-[-0.045em] text-[#14221e]"
             style={{ paddingRight: '0.045em' }}
           >
             NAF
@@ -257,7 +279,7 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
             ref={pillRef}
             onClick={handleReplay}
             title="Cliquer pour rejouer l'animation"
-            className="relative rounded-full overflow-hidden bg-[#01362a] border border-[#01362a]/15 cursor-pointer shrink-0 flex items-center justify-center"
+            className="relative rounded-full overflow-hidden bg-[#261a14] cursor-pointer shrink-0 flex items-center justify-center"
           >
             <video
               ref={videoRef}
@@ -279,19 +301,16 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
             <div
               ref={veilRef}
               aria-hidden="true"
-              className="absolute inset-0 bg-[#9b937c] pointer-events-none"
+              className="absolute inset-0 bg-[#b9b9b9] pointer-events-none"
             />
 
-            {/* Repères Naforo aux extrémités de la pilule */}
+            {/* Icônes filaires aux extrémités */}
             <div
               ref={iconsRef}
-              className="absolute inset-x-4 sm:inset-x-6 bottom-3 sm:bottom-4 flex items-center justify-between text-white pointer-events-none"
-              style={{ filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.55))' }}
+              className="absolute inset-x-4 sm:inset-x-5 bottom-3 sm:bottom-4 flex items-center justify-between text-white pointer-events-none"
+              style={{ filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.45))' }}
             >
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium tracking-wide">
-                <MapPin size={13} strokeWidth={2} />
-                Cocody &middot; Abidjan
-              </span>
+              <Wind size={16} strokeWidth={1.75} />
               <button
                 type="button"
                 aria-pressed={soundOn}
@@ -302,13 +321,13 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
                 }}
                 className="pointer-events-auto p-1 rounded-full hover:bg-white/15 transition-colors cursor-pointer"
               >
-                {soundOn ? <Volume2 size={15} strokeWidth={1.75} /> : <VolumeX size={15} strokeWidth={1.75} />}
+                {soundOn ? <Volume2 size={16} strokeWidth={1.75} /> : <VolumeX size={16} strokeWidth={1.75} />}
               </button>
             </div>
           </div>
 
           <span
-            className="font-extrabold tracking-[-0.045em] text-[#01362a]"
+            className="font-extrabold tracking-[-0.045em] text-[#14221e]"
             style={{ paddingRight: '0.045em' }}
           >
             ORO
@@ -321,24 +340,24 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
         ref={footerRef}
         className="relative z-10 max-w-[1440px] w-full mx-auto px-5 sm:px-8 lg:px-12 pb-6 sm:pb-8 flex flex-col md:flex-row md:items-end justify-between gap-5"
       >
-        <p className="text-[13px] sm:text-[14px] leading-[1.5] text-[#14221e]/85 max-w-sm">
+        <p className="text-[13px] sm:text-[14px] leading-[1.5] text-[#3a3a3a] max-w-sm">
           <span className="float-left mr-2 mt-0.5 text-[2.3em] leading-[0.82] font-bold text-[#01362a]">
-            V
+            P
           </span>
-          os loyers arrivent à temps, vos biens restent sous contrôle. Encaissements Wave et Orange
-          Money, quittances QR Code et validation travaux en direct.
+          longez dans l&apos;univers chaleureux de Naforo et pilotez des demeures d&apos;exception.
+          Vos loyers Wave et Orange Money encaissés à temps, pensés pour une gestion sereine.
         </p>
 
         <div
           ref={ruleRef}
-          className="hidden md:block flex-1 h-px bg-[#01362a]/25 mb-3 origin-center"
+          className="hidden md:block flex-1 h-px bg-[#a9a9a6] mb-3 origin-center"
         />
 
         <div className="flex items-center justify-between md:justify-end gap-3 shrink-0">
           <button
             type="button"
             onClick={handleReplay}
-            className="h-10 w-10 rounded-full border border-[#01362a]/30 text-[#01362a] hover:bg-[#01362a]/10 inline-flex items-center justify-center transition-colors cursor-pointer"
+            className="h-10 w-10 rounded-full border border-[#a9a9a6] text-[#3a3a3a] hover:text-[#01362a] hover:border-[#01362a] inline-flex items-center justify-center transition-colors cursor-pointer"
             title="Rejouer la révélation"
             aria-label="Rejouer la révélation"
           >
@@ -353,12 +372,12 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
             }}
             className="h-10 sm:h-11 px-6 rounded-full bg-[#01362a] hover:bg-[#024c3b] text-white text-[13.5px] font-semibold transition-colors cursor-pointer"
           >
-            Créer mon agence
+            Découvrir Naforo
           </button>
 
           <a
             href="#histoire"
-            className="h-10 sm:h-11 px-5 rounded-full border border-[#01362a]/30 text-[#01362a] hover:bg-[#01362a]/10 text-[13.5px] font-medium inline-flex items-center transition-colors"
+            className="h-10 sm:h-11 px-5 rounded-full border border-[#01362a]/30 text-[#01362a] hover:bg-[#01362a]/5 text-[13.5px] font-medium inline-flex items-center transition-colors"
           >
             L&apos;histoire &darr;
           </a>
