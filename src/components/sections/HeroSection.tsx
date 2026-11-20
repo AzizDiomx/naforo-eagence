@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RotateCcw, Volume2, VolumeX, Wind } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { playHeroMotionSound, unlockHeroAudio } from '@/lib/heroSound';
 
 interface HeroSectionProps {
   onOpenWizard: () => void;
@@ -27,7 +28,12 @@ const CURVES = [
 ];
 
 export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
-  const [soundOn, setSoundOn] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
+  const soundOnRef = useRef(true);
+
+  useEffect(() => {
+    soundOnRef.current = soundOn;
+  }, [soundOn]);
 
   const paperRef = useRef<HTMLDivElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
@@ -179,6 +185,8 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
         if (prefersReduced && videoRef.current) {
           videoRef.current.pause();
         }
+      } else if (soundOnRef.current) {
+        void playHeroMotionSound('open');
       }
 
       animsRef.current = anims;
@@ -192,12 +200,18 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
       buildReveal(false);
       return;
     }
+    if (soundOnRef.current) {
+      void playHeroMotionSound('close');
+    }
     anims.forEach((a) => {
       a.playbackRate = -1;
       a.play();
     });
     Promise.all(anims.map((a) => a.finished.catch(() => null))).then(() => {
       replayTimerRef.current = window.setTimeout(() => {
+        if (soundOnRef.current) {
+          void playHeroMotionSound('open');
+        }
         anims.forEach((a) => {
           a.playbackRate = 1;
           a.play();
@@ -314,10 +328,16 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
               <button
                 type="button"
                 aria-pressed={soundOn}
-                aria-label={soundOn ? 'Couper l’indicateur sonore' : 'Activer l’indicateur sonore'}
+                aria-label={soundOn ? 'Couper le son du mouvement' : 'Activer le son du mouvement'}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSoundOn((prev) => !prev);
+                  const next = !soundOn;
+                  setSoundOn(next);
+                  if (next) {
+                    void unlockHeroAudio().then((ok) => {
+                      if (ok) void playHeroMotionSound('tick');
+                    });
+                  }
                 }}
                 className="pointer-events-auto p-1 rounded-full hover:bg-white/15 transition-colors cursor-pointer"
               >
