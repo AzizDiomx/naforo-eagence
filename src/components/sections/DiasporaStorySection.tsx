@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   AnimatePresence,
@@ -159,7 +159,27 @@ const BG_STOPS = ['#0a1220', '#11121b', '#1a0f12', '#160c0e', '#0a1917', '#05201
 export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySectionProps) {
   const containerRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const [sceneMounted, setSceneMounted] = useState(false);
   const n = CHAPTERS.length;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setSceneMounted(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setSceneMounted(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '450px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -216,9 +236,9 @@ export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySect
           </div>
         </div>
 
-        {/* Scène 3D */}
+        {/* Scène 3D (chargée à l'approche de la section pour préserver la mémoire mobile) */}
         <div className="absolute inset-0">
-          <StoryScene progress={scrollYProgress} />
+          {sceneMounted && <StoryScene progress={scrollYProgress} />}
         </div>
 
         {/* Dégradé de lisibilité mobile */}

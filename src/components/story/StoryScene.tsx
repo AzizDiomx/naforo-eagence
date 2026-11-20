@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { Component, type ReactNode, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { MotionValue } from 'framer-motion';
@@ -654,18 +654,39 @@ function Character({ progress }: { progress: MotionValue<number> }) {
 /*  Canvas                                                                     */
 /* -------------------------------------------------------------------------- */
 
+class WebGLErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
+
 export default function StoryScene({ progress }: { progress: MotionValue<number> }) {
   return (
-    <Canvas
-      camera={{ position: [0, 1.35, 6.4], fov: 34 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true }}
-      onCreated={({ camera }) => camera.lookAt(0, 0.95, 0)}
-    >
-      <hemisphereLight args={['#e5f2ee', '#1b1714', 1.0]} />
-      <directionalLight position={[3, 5, 4]} intensity={2.35} />
-      <directionalLight position={[-3, 2, 3]} intensity={0.65} color="#fff7ed" />
-      <Character progress={progress} />
-    </Canvas>
+    <WebGLErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 1.35, 6.4], fov: 34 }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: true, alpha: true, powerPreference: 'default' }}
+        onCreated={({ camera }) => camera.lookAt(0, 0.95, 0)}
+      >
+        <hemisphereLight args={['#e5f2ee', '#1b1714', 1.0]} />
+        <directionalLight position={[3, 5, 4]} intensity={2.35} />
+        <directionalLight position={[-3, 2, 3]} intensity={0.65} color="#fff7ed" />
+        <Character progress={progress} />
+      </Canvas>
+    </WebGLErrorBoundary>
   );
 }

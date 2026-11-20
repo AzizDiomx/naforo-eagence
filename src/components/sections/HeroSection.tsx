@@ -240,6 +240,7 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
 
   useEffect(() => {
     let mounted = true;
+    let lastWidth = window.innerWidth;
     const fallback = window.setTimeout(() => {
       if (mounted) buildReveal(false);
     }, 1200);
@@ -249,8 +250,14 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
       if (mounted) buildReveal(false);
     });
 
-    const onResize = () => buildReveal(true);
-    window.addEventListener('resize', onResize);
+    const onResize = () => {
+      // Sur mobile iOS/Chrome, la barre d'adresse change innerHeight au scroll sans changer innerWidth
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        buildReveal(true);
+      }
+    };
+    window.addEventListener('resize', onResize, { passive: true });
 
     return () => {
       mounted = false;
@@ -320,7 +327,7 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
               loop
               playsInline
               autoPlay
-              preload="auto"
+              preload="metadata"
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover"
               style={{
                 minWidth: 'max(100%, 4.2em)',
