@@ -225,11 +225,11 @@ function Character({ progress }: { progress: MotionValue<number> }) {
     const vw = state.viewport.width;
     const narrow = vw < 4.4;
     const xScale = narrow ? 0 : Math.min(1, vw / 7.2);
-    const scale = narrow ? 0.82 : 1;
+    const scale = narrow ? 0.78 : 1;
 
     if (root.current) {
-      root.current.position.x = cur.x * xScale;
-      root.current.position.y = narrow ? 0.55 : 0;
+      root.current.position.x = narrow ? -0.32 : cur.x * xScale;
+      root.current.position.y = narrow ? 0.42 : 0;
       root.current.rotation.y = ms.facing;
       root.current.scale.setScalar(scale);
     }
@@ -284,14 +284,17 @@ function Character({ progress }: { progress: MotionValue<number> }) {
 
     if (shadow.current && root.current) {
       shadow.current.position.x = root.current.position.x;
-      shadow.current.position.y = (narrow ? 0.55 : 0) + 0.002;
+      shadow.current.position.y = (narrow ? 0.42 : 0) + 0.002;
       const s = (1.28 + (cur.y < -0.2 ? 0.25 : 0) - jump * 2) * scale;
       shadow.current.scale.set(s, s * 0.6, 1);
     }
 
     if (house.current) {
-      house.current.position.y = (narrow ? 0.55 : 0) + Math.sin(t * 0.7) * 0.015;
-      house.current.visible = !narrow;
+      house.current.position.x = narrow ? 0.42 : 0.05;
+      house.current.position.y = (narrow ? 0.68 : 0) + Math.sin(t * 0.7) * 0.015;
+      house.current.position.z = narrow ? -4.35 : -3.7;
+      house.current.scale.setScalar(narrow ? 0.66 : 1.12);
+      house.current.visible = true;
     }
   });
 

@@ -47,9 +47,11 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 border-b ${
-        scrolled || mobileMenuOpen
-          ? 'bg-[#f2f2f1]/92 backdrop-blur-md border-[#d8d8d4]'
-          : 'bg-transparent border-transparent'
+        mobileMenuOpen
+          ? 'bg-[#f2f2f1] border-[#d8d8d4]'
+          : scrolled
+          ? 'bg-[#f2f2f1]/95 backdrop-blur-md border-[#d8d8d4]'
+          : 'bg-[#f2f2f1]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-[#d8d8d4] md:border-transparent'
       }`}
     >
       <div className="max-w-[1440px] mx-auto h-16 px-5 sm:px-8 lg:px-12 flex items-center justify-between">
@@ -119,7 +121,7 @@ export default function Navbar({ onOpenWizard }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="md:hidden fixed inset-x-0 top-16 bottom-0 bg-[#f2f2f1] px-5 pt-4 pb-8 flex flex-col"
+            className="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] z-50 bg-[#f2f2f1] border-t border-[#d8d8d4] px-5 pt-4 pb-8 flex flex-col overflow-y-auto"
           >
             {NAV_LINKS.map((item) => (
               <a

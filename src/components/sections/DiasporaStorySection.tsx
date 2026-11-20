@@ -181,6 +181,16 @@ export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySect
 
   const chapter = CHAPTERS[active];
   const isLast = active === n - 1;
+  const isResolved = active >= 4;
+
+  const jumpToChapter = (idx: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const top = el.offsetTop;
+    const scrollable = el.offsetHeight - window.innerHeight;
+    const targetY = top + (idx / Math.max(n - 1, 1)) * scrollable;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
 
   return (
     <section
@@ -192,16 +202,30 @@ export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySect
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ backgroundColor: background }} />
 
+        {/* Repère Paris ↔ Abidjan */}
+        <div className="absolute top-20 inset-x-4 z-20 flex justify-center pointer-events-none">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/45 border border-white/10 backdrop-blur-md text-[11px] sm:text-xs text-white/85">
+            <span
+              className={`w-2 h-2 rounded-full ${isResolved ? 'bg-[#3ddc97]' : 'bg-[#ff8a78]'}`}
+            />
+            <span>Paris (Koffi)</span>
+            <span className="text-white/40">&bull;</span>
+            <span className="text-white/65">{isResolved ? 'Temps réel' : '5 000 km'}</span>
+            <span className="text-white/40">&bull;</span>
+            <span>Abidjan</span>
+          </div>
+        </div>
+
         {/* Scène 3D */}
         <div className="absolute inset-0">
           <StoryScene progress={scrollYProgress} />
         </div>
 
         {/* Dégradé de lisibilité mobile */}
-        <div className="md:hidden absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/80 via-black/50 to-transparent pointer-events-none" />
+        <div className="md:hidden absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-black/92 via-black/70 to-transparent pointer-events-none" />
 
         {/* Texte du chapitre */}
-        <div className="absolute inset-0 max-w-7xl mx-auto px-5 sm:px-8 flex items-end md:items-center pb-14 md:pb-0 pointer-events-none">
+        <div className="absolute inset-0 max-w-7xl mx-auto px-5 sm:px-8 flex items-end md:items-center pb-16 md:pb-0 pointer-events-none">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -213,32 +237,34 @@ export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySect
                 chapter.textSide === 'right' ? 'md:ml-auto' : ''
               }`}
             >
-              <p className="text-[13px] tracking-wide text-white/45 mb-4">
+              <p className="text-[12px] sm:text-[13px] tracking-wide text-white/50 mb-2 sm:mb-4">
                 {String(active + 1).padStart(2, '0')} &nbsp;·&nbsp; {chapter.eyebrow}
               </p>
-              <h2 className="font-display text-[1.9rem] leading-[1.1] sm:text-5xl font-semibold tracking-[-0.03em]">
+              <h2 className="font-display text-[1.5rem] leading-[1.12] sm:text-5xl font-semibold tracking-[-0.03em]">
                 {chapter.title}
               </h2>
-              <p className="mt-5 text-[15px] sm:text-lg text-white/60 leading-relaxed max-w-md">
+              <p className="mt-3 sm:mt-5 text-[13.5px] sm:text-lg text-white/70 leading-relaxed max-w-md">
                 {chapter.body}
               </p>
 
-              <div className="hidden sm:block">{chapter.aside}</div>
+              <div className="mt-4 sm:mt-0 scale-[0.95] origin-left sm:scale-100">
+                {chapter.aside}
+              </div>
 
               {isLast && (
-                <div className="mt-9 flex flex-col sm:flex-row gap-3">
+                <div className="mt-6 sm:mt-9 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
                   <button
                     onClick={() => {
                       trackEvent('cta_banner_clicked', { source: 'diaspora_story' });
                       onOpenWizard();
                     }}
-                    className="h-12 px-7 rounded-full bg-white text-[#06100e] text-[15px] font-medium hover:bg-white/90 transition-colors cursor-pointer"
+                    className="h-11 sm:h-12 px-6 sm:px-7 rounded-full bg-white text-[#06100e] text-[14px] sm:text-[15px] font-medium hover:bg-white/90 transition-colors cursor-pointer"
                   >
                     Commencer gratuitement
                   </button>
                   <a
                     href="#fonctionnalites"
-                    className="h-12 px-6 rounded-full border border-white/15 text-[15px] text-white/80 hover:text-white hover:border-white/30 inline-flex items-center justify-center transition-colors"
+                    className="h-11 sm:h-12 px-6 rounded-full border border-white/15 text-[14px] sm:text-[15px] text-white/80 hover:text-white hover:border-white/30 inline-flex items-center justify-center transition-colors"
                   >
                     Voir les fonctionnalités
                   </a>
@@ -248,14 +274,33 @@ export default function DiasporaStorySection({ onOpenWizard }: DiasporaStorySect
           </AnimatePresence>
         </div>
 
-        {/* Progression discrète */}
-        <div className="absolute left-5 sm:left-8 right-5 sm:right-8 bottom-5 flex items-center gap-4 pointer-events-none">
-          <div className="flex-1 h-px bg-white/10 overflow-hidden">
+        {/* Progression interactive */}
+        <div className="absolute left-5 sm:left-8 right-5 sm:right-8 bottom-4 flex items-center gap-3 pointer-events-auto">
+          <div className="flex items-center gap-1 overflow-x-auto">
+            {CHAPTERS.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => jumpToChapter(idx)}
+                className={`px-2 py-0.5 rounded-full text-[11px] tabular-nums transition-colors cursor-pointer ${
+                  idx === active
+                    ? 'bg-white text-[#06100e] font-semibold'
+                    : 'bg-white/10 text-white/55 hover:text-white'
+                }`}
+              >
+                {String(idx + 1).padStart(2, '0')}
+              </button>
+            ))}
+          </div>
+          <div className="hidden sm:block flex-1 h-px bg-white/10 overflow-hidden">
             <motion.div className="h-full bg-white/50 origin-left" style={{ scaleX: railScale }} />
           </div>
-          <span className="text-[12px] tabular-nums text-white/40">
-            {String(active + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
-          </span>
+          <a
+            href="#fonctionnalites"
+            className="ml-auto text-[11px] sm:text-[12px] text-white/55 hover:text-white whitespace-nowrap transition-colors"
+          >
+            Passer &darr;
+          </a>
         </div>
       </div>
     </section>

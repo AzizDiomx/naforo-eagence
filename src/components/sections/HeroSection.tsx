@@ -259,12 +259,11 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
       </div>
 
       {/* Scène centrale : NAF · Pilule Vidéo · ORO */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-5 pt-16 pb-6">
+      <div className="relative z-10 flex-1 flex items-center justify-center px-5 pt-20 pb-4">
         <div
           ref={rowRef}
-          className="flex flex-col md:flex-row items-center justify-center select-none"
+          className="flex flex-col md:flex-row items-center justify-center select-none text-[clamp(44px,min(22vw,11.5vh),88px)] md:text-[clamp(48px,min(17vh,10.6vw),190px)]"
           style={{
-            fontSize: 'clamp(42px, min(17vh, 10.6vw), 190px)',
             lineHeight: 0.8,
           }}
         >
