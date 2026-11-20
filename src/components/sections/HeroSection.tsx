@@ -353,9 +353,7 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
                   setSoundOn(next);
                   soundOnRef.current = next;
                   if (next) {
-                    void unlockHeroAudio().then((ok) => {
-                      if (ok) void playHeroMotionSound('open');
-                    });
+                    handleReplay();
                   }
                 }}
                 className="pointer-events-auto p-1 rounded-full hover:bg-white/15 transition-colors cursor-pointer"
@@ -392,15 +390,30 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
           className="hidden md:block flex-1 h-px bg-[#a9a9a6] mb-3 origin-center"
         />
 
-        <div className="flex items-center justify-between md:justify-end gap-3 shrink-0">
+        <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
           <button
             type="button"
-            onClick={handleReplay}
-            className="h-10 w-10 rounded-full border border-[#a9a9a6] text-[#3a3a3a] hover:text-[#01362a] hover:border-[#01362a] inline-flex items-center justify-center transition-colors cursor-pointer"
-            title="Rejouer la révélation"
-            aria-label="Rejouer la révélation"
+            onClick={() => {
+              if (!soundOn) {
+                setSoundOn(true);
+                soundOnRef.current = true;
+              }
+              handleReplay();
+            }}
+            className={`h-10 rounded-full border border-[#a9a9a6] text-[#3a3a3a] hover:text-[#01362a] hover:border-[#01362a] inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+              soundOn ? 'w-10' : 'px-3.5 text-[12.5px] font-medium'
+            }`}
+            title={soundOn ? 'Rejouer la révélation' : 'Rejouer avec le son'}
+            aria-label={soundOn ? 'Rejouer la révélation' : 'Rejouer avec le son'}
           >
-            <RotateCcw size={15} />
+            {soundOn ? (
+              <RotateCcw size={15} />
+            ) : (
+              <>
+                <Volume2 size={14} />
+                <span>Son</span>
+              </>
+            )}
           </button>
 
           <button
