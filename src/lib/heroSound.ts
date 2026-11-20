@@ -29,18 +29,21 @@ export async function unlockHeroAudio(): Promise<boolean> {
  * Synthétise un souffle doux et une résonance acoustique chaleureuse
  * synchronisés avec l'ouverture ou la fermeture de la pilule du Hero.
  */
-export async function playHeroMotionSound(mode: 'open' | 'close' | 'tick'): Promise<void> {
+export async function playHeroMotionSound(mode: 'open' | 'close' | 'tick'): Promise<boolean> {
   const ctx = getAudioContext();
-  if (!ctx) return;
+  if (!ctx) return false;
 
   if (ctx.state === 'suspended') {
     try {
-      await ctx.resume();
+      await Promise.race([
+        ctx.resume(),
+        new Promise((resolve) => window.setTimeout(resolve, 120)),
+      ]);
     } catch {
-      return;
+      return false;
     }
   }
-  if (ctx.state !== 'running') return;
+  if (ctx.state !== 'running') return false;
 
   const now = ctx.currentTime;
 
@@ -66,7 +69,7 @@ export async function playHeroMotionSound(mode: 'open' | 'close' | 'tick'): Prom
     gain.connect(compressor);
     osc.start(now);
     osc.stop(now + 0.26);
-    return;
+    return true;
   }
 
   // 1. Souffle filtré (mouvement d'air / papier à l'ouverture ou fermeture)
@@ -129,4 +132,6 @@ export async function playHeroMotionSound(mode: 'open' | 'close' | 'tick'): Prom
       osc.stop(start + 1.65);
     });
   }
+
+  return true;
 }

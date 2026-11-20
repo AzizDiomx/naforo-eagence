@@ -186,7 +186,11 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
           videoRef.current.pause();
         }
       } else if (soundOnRef.current) {
-        void playHeroMotionSound('open');
+        void playHeroMotionSound('open').then((played) => {
+          if (!played) {
+            setSoundOn(false);
+          }
+        });
       }
 
       animsRef.current = anims;
@@ -200,9 +204,11 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
       buildReveal(false);
       return;
     }
-    if (soundOnRef.current) {
-      void playHeroMotionSound('close');
-    }
+    void unlockHeroAudio().then((ok) => {
+      if (ok && soundOnRef.current) {
+        void playHeroMotionSound('close');
+      }
+    });
     anims.forEach((a) => {
       a.playbackRate = -1;
       a.play();
@@ -219,6 +225,18 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
       }, 100);
     });
   }, [buildReveal]);
+
+  useEffect(() => {
+    const unlockOnce = () => {
+      void unlockHeroAudio();
+    };
+    window.addEventListener('pointerdown', unlockOnce, { once: true, passive: true });
+    window.addEventListener('keydown', unlockOnce, { once: true, passive: true });
+    return () => {
+      window.removeEventListener('pointerdown', unlockOnce);
+      window.removeEventListener('keydown', unlockOnce);
+    };
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -333,9 +351,10 @@ export default function HeroSection({ onOpenWizard }: HeroSectionProps) {
                   e.stopPropagation();
                   const next = !soundOn;
                   setSoundOn(next);
+                  soundOnRef.current = next;
                   if (next) {
                     void unlockHeroAudio().then((ok) => {
-                      if (ok) void playHeroMotionSound('tick');
+                      if (ok) void playHeroMotionSound('open');
                     });
                   }
                 }}
