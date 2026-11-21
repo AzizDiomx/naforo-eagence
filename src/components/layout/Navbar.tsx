@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: '#', label: 'Accueil' },
   { href: '#histoire', label: 'Histoire' },
   { href: '#fonctionnalites', label: 'Fonctionnalités' },
+  { href: '#forfaits', label: 'Forfaits' },
   { href: '#demo', label: 'Démo' },
   { href: '#faq', label: 'FAQ' },
 ];

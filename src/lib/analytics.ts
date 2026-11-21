@@ -21,12 +21,58 @@ export type FunnelEvent =
   | 'agency_creation_failed'
   | 'redirected_to_backoffice';
 
+import { APP_CONFIG } from './config';
+
 interface EventPayload {
   [key: string]: any;
 }
 
+function getOrCreateSessionId(): string {
+  try {
+    const existing = sessionStorage.getItem('naforo_session_id');
+    if (existing) return existing;
+    const created = `sess_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+    sessionStorage.setItem('naforo_session_id', created);
+    return created;
+  } catch {
+    return `sess_${Date.now().toString(36)}`;
+  }
+}
+
+function notifyBackendVisitOnce() {
+  if (typeof window === 'undefined') return;
+  try {
+    if (sessionStorage.getItem('naforo_visit_reported') === '1') return;
+    sessionStorage.setItem('naforo_visit_reported', '1');
+  } catch {
+    // Continue even if sessionStorage is restricted
+  }
+
+  const sessionId = getOrCreateSessionId();
+  const payload = {
+    path: window.location.pathname + window.location.search,
+    referrer: document.referrer || '',
+    sessionId,
+    language: navigator.language || '',
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+  };
+
+  fetch(`${APP_CONFIG.apiUrl}/admin/public/eagence-visit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch(() => {
+    // Non-blocking telemetry
+  });
+}
+
 export function trackEvent(event: FunnelEvent, payload?: EventPayload) {
   if (typeof window === 'undefined') return;
+
+  if (event === 'landing_view') {
+    notifyBackendVisitOnce();
+  }
 
   const timestamp = new Date().toISOString();
   const eventData = {

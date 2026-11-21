@@ -8,6 +8,7 @@ import CoreFeatures from '@/components/sections/CoreFeatures';
 import InteractiveDemo from '@/components/sections/InteractiveDemo';
 import AiCopilotSection from '@/components/sections/AiCopilotSection';
 import SimulatorRoi from '@/components/sections/SimulatorRoi';
+import PlanComparator from '@/components/sections/PlanComparator';
 import Testimonials from '@/components/sections/Testimonials';
 import SecurityCompliance from '@/components/sections/SecurityCompliance';
 import FaqSection from '@/components/sections/FaqSection';
@@ -56,6 +57,7 @@ export default function HomePage() {
         <CoreFeatures onOpenWizard={handleOpenWizard} />
         <InteractiveDemo onOpenWizard={handleOpenWizard} />
         <AiCopilotSection onOpenWizard={handleOpenWizard} />
+        <PlanComparator onOpenWizard={handleOpenWizard} />
         <SimulatorRoi onOpenWizard={handleOpenWizard} />
         <Testimonials />
         <SecurityCompliance />
