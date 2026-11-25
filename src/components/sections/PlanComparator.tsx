@@ -33,9 +33,9 @@ const DEFAULT_TIERS: TierSpec[] = [
   {
     code: 'starter',
     name: 'Starter',
-    tagline: 'Idéal pour découvrir Naforo et gérer ses premiers biens pendant 3 mois.',
+    tagline: 'Formule Gratuite — Idéale pour découvrir Naforo et gérer ses premiers biens pendant 3 mois.',
     priceMonthlyXof: 0,
-    yearlyDiscountPercent: 20,
+    yearlyDiscountPercent: 0,
     ctaLabel: 'Démarrer gratuitement',
     quotas: {
       lots: '1 immeuble / lot',
@@ -55,9 +55,9 @@ const DEFAULT_TIERS: TierSpec[] = [
   },
   {
     code: 'pro',
-    name: 'Pro',
-    tagline: 'Pour les propriétaires multi-biens et cabinets en croissance.',
-    priceMonthlyXof: 25000,
+    name: 'Pro / Sérénité',
+    tagline: 'Formule Recommandée — Pour les propriétaires multi-biens et cabinets en croissance.',
+    priceMonthlyXof: 24900,
     yearlyDiscountPercent: 20,
     featured: true,
     ctaLabel: 'Essayer 3 mois gratuitement',
@@ -72,17 +72,17 @@ const DEFAULT_TIERS: TierSpec[] = [
     },
     highlights: [
       'Quittances certifiées avec QR Code',
-      'Relances automatiques WhatsApp & SMS',
+      'Paiements Mobile Money & relances SMS',
       'Circuit de validation des dépenses',
       'Scoring prédictif de risque locataire',
-      'Coffre-fort GED & messagerie locataire',
+      'Coffre-fort GED, export Excel & messagerie chiffrée',
     ],
   },
   {
     code: 'expert',
     name: 'Expert / Agence',
-    tagline: 'Pour les agences immobilières structurées avec équipes cloisonnées.',
-    priceMonthlyXof: 65000,
+    tagline: 'Multi-Parcs & Agences Immobilières — Biens illimités et équipes cloisonnées.',
+    priceMonthlyXof: 79900,
     yearlyDiscountPercent: 20,
     ctaLabel: 'Lancer mon agence',
     quotas: {
@@ -96,10 +96,10 @@ const DEFAULT_TIERS: TierSpec[] = [
     },
     highlights: [
       'Cloisonnement portefeuille par gérant',
-      'Accès dédiés Comptable & Techniciens',
-      'États des lieux numériques structurés',
-      'Marque blanche (logo, cachet & couleurs)',
-      'Rapports de gestion mandants (CRG) & support dédié',
+      'Espace Bailleurs & Comptes-Rendus de Gestion (CRG)',
+      'États des lieux numériques & signature électronique OTP',
+      'Relances WhatsApp directes & automatisées',
+      'Marque blanche complète (logo, cachet & couleurs) + API & SLA',
     ],
   },
 ];
@@ -184,11 +184,12 @@ export default function PlanComparator({ onOpenWizard }: PlanComparatorProps) {
         const apiPlans = json.data as Array<{
           code?: string;
           name?: string;
-          priceMonthlyXof?: number;
-          yearlyDiscountPercent?: number;
-          maxProperties?: number;
-          maxLots?: number;
-          maxTenants?: number;
+          priceMonthlyXof?: number | string;
+          yearlyDiscountPercent?: number | string;
+          maxProperties?: number | string;
+          maxLots?: number | string;
+          maxTenants?: number | string;
+          isRecommended?: boolean;
         }>;
 
         setTiers((prev) =>
@@ -197,27 +198,35 @@ export default function PlanComparator({ onOpenWizard }: PlanComparatorProps) {
               (p) => (p.code || '').toLowerCase() === tier.code
             );
             if (!match) return tier;
-            const fmtLimit = (n: number | undefined, unit: string, fallback: string) => {
-              if (typeof n !== 'number') return fallback;
+            const parsedPrice = Number(match.priceMonthlyXof);
+            const parsedDiscount = Number(match.yearlyDiscountPercent);
+            const parsedLots = Number(match.maxLots);
+            const parsedProps = Number(match.maxProperties);
+            const parsedTenants = Number(match.maxTenants);
+
+            const fmtLimit = (n: number, unit: string, fallback: string) => {
+              if (!Number.isFinite(n) || n <= 0) return fallback;
               if (n >= 999) return 'Illimité';
               return `Jusqu’à ${n} ${unit}`;
             };
             return {
               ...tier,
               name: match.name || tier.name,
-              priceMonthlyXof:
-                typeof match.priceMonthlyXof === 'number'
-                  ? match.priceMonthlyXof
-                  : tier.priceMonthlyXof,
-              yearlyDiscountPercent:
-                typeof match.yearlyDiscountPercent === 'number'
-                  ? match.yearlyDiscountPercent
-                  : tier.yearlyDiscountPercent,
+              featured:
+                typeof match.isRecommended === 'boolean'
+                  ? match.isRecommended
+                  : tier.featured,
+              priceMonthlyXof: Number.isFinite(parsedPrice)
+                ? parsedPrice
+                : tier.priceMonthlyXof,
+              yearlyDiscountPercent: Number.isFinite(parsedDiscount)
+                ? parsedDiscount
+                : tier.yearlyDiscountPercent,
               quotas: {
                 ...tier.quotas,
-                lots: fmtLimit(match.maxLots, match.maxLots === 1 ? 'immeuble' : 'immeubles', tier.quotas.lots),
-                properties: fmtLimit(match.maxProperties, 'unités', tier.quotas.properties),
-                tenants: fmtLimit(match.maxTenants, 'locataires', tier.quotas.tenants),
+                lots: fmtLimit(parsedLots, parsedLots === 1 ? 'immeuble' : 'immeubles', tier.quotas.lots),
+                properties: fmtLimit(parsedProps, 'unités', tier.quotas.properties),
+                tenants: fmtLimit(parsedTenants, 'locataires', tier.quotas.tenants),
               },
             };
           })
