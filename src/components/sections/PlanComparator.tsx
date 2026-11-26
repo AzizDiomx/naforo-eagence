@@ -177,7 +177,7 @@ export default function PlanComparator({ onOpenWizard }: PlanComparatorProps) {
 
   useEffect(() => {
     let active = true;
-    fetch(`${APP_CONFIG.apiUrl}/subscriptions/plans`)
+    fetch(`${APP_CONFIG.apiUrl}/subscriptions/plans`, { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
         if (!active || !Array.isArray(json?.data) || json.data.length === 0) return;
